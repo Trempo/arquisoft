@@ -4,7 +4,9 @@
 
 #### TODO:
 - [x] Instalar requierimientos en maquinas
-- [x] Implementación modelos Manejador Ordenes
+- [] Implementación modelos Manejador Ordenes
 - [] Implementación API Manejador Ordenes
-- [] Implementación modelos Manejador Comercio
+- [x] Implementación modelos Manejador Comercio
 - [] Implementación API Manejador Comercio
+- [] Pruebas Manejador Ordenes
+- [] Pruebas Manejador Comercio

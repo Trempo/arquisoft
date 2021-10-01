@@ -18,3 +18,4 @@ def menu_view(request, pk):
         return HttpResponse(menu_dto, 'application/json')
 
 
+
