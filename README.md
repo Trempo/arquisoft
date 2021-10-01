@@ -3,8 +3,8 @@
 ## Sprint 2
 
 #### TODO:
-- [] Instalar requierimientos en maquinas
-- [] Implementación modelos Manejador Ordenes
+- [x] Instalar requierimientos en maquinas
+- [x] Implementación modelos Manejador Ordenes
 - [] Implementación API Manejador Ordenes
 - [] Implementación modelos Manejador Comercio
 - [] Implementación API Manejador Comercio
