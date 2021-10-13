@@ -13,7 +13,8 @@ def get_menu(menu_pk):
 
 def update_menu(menu_pk, new_menu):
     menu = Menu.objects.get(pk=menu_pk)
-    menu.name = menu_pk.name
+    menu.name = new_menu.name
+    menu.comercio = new_menu.comercio
     menu.save()
     return menu
 
