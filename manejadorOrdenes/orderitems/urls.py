@@ -1,9 +1,8 @@
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import path
 from . import views
 
 urlpatterns = [
-
-    #Hola Nicolas aqui van tus rutas del api
-
+    path('', views.get_orderitems_list, name='get_orderitems_list'),
+    path('<int:orderitem_pk>/', views.orderitem_view, name='orderitem_view')
 ]

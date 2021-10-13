@@ -21,20 +21,20 @@ def list_order_view(request):
 
 
 @csrf_exempt
-def order_view(request, pk):
+def order_view(request, order_pk):
     if request.method == 'GET':
-        order = get_order(pk)
+        order = get_order(order_pk)
         order_dto = serializers.serialize('json', order)
         return HttpResponse(order_dto, 'application/json')
     elif request.method == 'DELETE':
-        delete_order(pk)
+        delete_order(order_pk)
         return HttpResponseRedirect('/orders/')
     elif request.method == 'PUT':
         body_unicode = request.body.decode('utf-8')
         body = json.loads(body_unicode)
         order = body['order']
-        update_order(pk, order)
-        return HttpResponseRedirect('/orders/id/11/')
+        update_order(order_pk, order)
+        return HttpResponseRedirect('/orders/' + str(order_pk) + '/')
 
 
 

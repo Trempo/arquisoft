@@ -28,7 +28,7 @@ def delete_order(order_pk):
 
 
 def create_order(new_order):
-    order = Order(name=new_order['name'])
+    order = Order(date=new_order['date'])
     order.save()
     return order
 
