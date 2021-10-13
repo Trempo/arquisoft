@@ -3,7 +3,7 @@ from django.db import models
 
 class Order(models.Model):
     date = models.DateTimeField(auto_now_add=True)
-    cost = models.DecimalField()
+    cost = models.IntegerField()
     specifications = models.CharField(max_length=50)
     authorizedPerson = models.CharField(max_length=50)
     review = models.IntegerField()
