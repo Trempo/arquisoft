@@ -7,6 +7,6 @@
 - [] Implementación modelos Manejador Ordenes
 - [] Implementación API Manejador Ordenes
 - [x] Implementación modelos Manejador Comercio
-- [] Implementación API Manejador Comercio
+- [X] Implementación API Manejador Comercio
 - [] Pruebas Manejador Ordenes
 - [] Pruebas Manejador Comercio
