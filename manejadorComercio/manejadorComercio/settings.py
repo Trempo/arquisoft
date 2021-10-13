@@ -37,9 +37,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'menu',
-    'product',
-    'comercio',
+    'menus',
+    'products',
+    'comercios',
 ]
 
 MIDDLEWARE = [
@@ -77,13 +77,13 @@ WSGI_APPLICATION = 'manejadorComercio.wsgi.application'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'monitoring_db',
-        'USER': 'cargauser',
-        'PASSWORD': 'mamahuevo',
-        'HOST': '172.24.98.84',
-        'PORT': '5432'
+    "default": {
+        "ENGINE": "django.db.backends.postgresql_psycopg2",
+        "NAME": "stigmergy",
+        "USER": "user",
+        "PASSWORD": "password",
+        "HOST": "localhost",
+        "PORT": "5432",
     }
 }
 
