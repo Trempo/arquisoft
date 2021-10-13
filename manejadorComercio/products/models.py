@@ -10,4 +10,4 @@ class Product(models.Model):
     stock = models.IntegerField()
 
     def __str__(self):
-        return 'Nombre: ' + self.name + '\nPrecio: ' + self.price + '\nStock: ' + self.stock
+        return 'Nombre: ' + self.name + '\nPrecio: ' + str(self.price) + '\nStock: ' + str(self.stock)
