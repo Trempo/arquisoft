@@ -1,9 +1,9 @@
 from django.db import models
 
-from order.models import Order
+from orders.models import Order
 
 class OrderStatus(models.Model):
-    order = models.OneToOneField(Order, on_delete=models.CASCADE, primary_key=True)
+    order = models.ForeignKey(Order, on_delete=models.CASCADE)
     description = models.CharField(max_length=50)
 
     def __str__(self):
