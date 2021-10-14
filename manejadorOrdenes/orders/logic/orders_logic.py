@@ -28,6 +28,7 @@ def delete_order(order_pk):
 
 
 def create_order(new_order):
+
     order = Order(date=new_order['date'],cost=new_order['cost'],specifications=new_order['specifications'],authorizedPerson=new_order['authorizedPerson'],review=new_order['review'])
     order.save()
     return order
