@@ -6,7 +6,7 @@ class Order(models.Model):
     cost = models.IntegerField()
     specifications = models.CharField(max_length=50)
     authorizedPerson = models.CharField(max_length=50)
-    review = models.IntegerField()
+    review = models.IntegerField(default=5)
 
     def __str__(self):
         return 'Fecha: ' + str(self.date) + '\nPrecio: ' + str(self.cost) + '\nEspecificaciones: ' + self.specifications \
