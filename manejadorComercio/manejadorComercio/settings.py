@@ -79,9 +79,9 @@ WSGI_APPLICATION = 'manejadorComercio.wsgi.application'
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql_psycopg2",
-        "NAME": "monitoring_db",
-        "USER": "cargauser",
-        "PASSWORD": "mamahuevo",
+        "NAME": "stigmergy",
+        "USER": "stigmergy",
+        "PASSWORD": "stigmergy",
         "HOST": "172.24.98.84",
         "PORT": "5432",
     }
