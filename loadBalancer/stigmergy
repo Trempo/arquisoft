@@ -1,0 +1,18 @@
+server {
+	listen 80;
+        location /comercio {
+                proxy_pass http://comercio;
+                rewrite  ^/comercio/(.*) /$1 break;
+        }
+	location /ordenes {
+		proxy_pass http://ordenes;
+	        rewrite  ^/ordenes/(.*) /$1 break;
+	}
+	location /datos{
+		proxy_pass http://datos;
+	        rewrite  ^/datos/(.*) /$1 break;		
+	}
+	location /{
+		root /www/data;
+	}
+}
