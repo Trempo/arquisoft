@@ -17,7 +17,7 @@ def list_order_view(request):
         body = json.loads(body_unicode)
         order = body['order']
         create_order(order)
-        return HttpResponseRedirect('/orders/')
+        return HttpResponseRedirect('/ordenes/orders/')
 
 
 @csrf_exempt
@@ -34,7 +34,7 @@ def order_view(request, order_pk):
         body = json.loads(body_unicode)
         order = body['order']
         update_order(order_pk, order)
-        return HttpResponseRedirect('/orders/' + str(order_pk) + '/')
+        return HttpResponseRedirect('/ordenes/orders/' + str(order_pk) + '/')
 
 
 
