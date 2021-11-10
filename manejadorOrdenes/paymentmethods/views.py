@@ -1,14 +1,15 @@
 import json
+
+from django.contrib.auth.decorators import login_required
 from django.http.response import HttpResponseRedirect
 from django.shortcuts import render
-from django.views.decorators.csrf import csrf_exempt
 
 from .logic.paymentmethods_logic import *
 from django.http import HttpResponse
 from django.core import serializers
 
 
-@csrf_exempt
+@login_required
 def get_paymentmethods_list(request, order_pk):
     if request.method == 'GET':
         paymentmethods = get_paymentmethods(order_pk)
@@ -22,7 +23,7 @@ def get_paymentmethods_list(request, order_pk):
         return HttpResponseRedirect('/orders/' + str(order_pk) + '/paymentmethods/')
 
 
-@csrf_exempt
+@login_required
 def paymentmethod_view(request, paymentmethod_pk, order_pk):
     if request.method == 'GET':
         paymentmethod = get_paymentmethod(paymentmethod_pk)
