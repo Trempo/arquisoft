@@ -15,7 +15,6 @@ from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
@@ -26,7 +25,6 @@ SECRET_KEY = 'django-insecure-w+vj23@hv1dprv*bo=iodi4^=e(kmvbgiv_$as$k$ydlo6723(
 DEBUG = True
 
 ALLOWED_HOSTS = ['*']
-
 
 # Application definition
 
@@ -41,6 +39,7 @@ INSTALLED_APPS = [
     'orderitems',
     'orderstatus',
     'paymentmethods',
+    'social_django'
 ]
 
 MIDDLEWARE = [
@@ -73,7 +72,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'manejadorOrdenes.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
@@ -83,11 +81,10 @@ DATABASES = {
         "NAME": "stigmergy",
         "USER": "stigmergy",
         "PASSWORD": "stigmergy",
-        "HOST": "172.24.98.84",
+        "HOST": "stigmergy.cnbtgpd98rie.us-east-1.rds.amazonaws.com",
         "PORT": "5432",
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
@@ -107,7 +104,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
@@ -121,7 +117,6 @@ USE_L10N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
@@ -131,3 +126,14 @@ STATIC_URL = '/static/'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Auth0 configuration
+LOGIN_URL = "/login/auth0"
+LOGIN_REDIRECT_URL = "/"
+LOGOUT_REDIRECT_URL = "https://isis2503-trempo.us.auth0.com/v2/logout?returnTo=http%3A%2F%2Flocalhost:8000"
+SOCIAL_AUTH_TRAILING_SLASH = False  # Remove end slash from routes
+SOCIAL_AUTH_AUTH0_DOMAIN = 'isis2503-trempo.us.auth0.com'
+SOCIAL_AUTH_AUTH0_KEY = 'zEMtfeR1d6vuJMM97TskzlWEtr8YTbWo'
+SOCIAL_AUTH_AUTH0_SECRET = 'DCynGHILAavIlVgdOQmsW2-c54BrmOaJ9vK2qXIqUQ2cMXTVVOgJWfBYmrC7-gZP'
+SOCIAL_AUTH_AUTH0_SCOPE = ['openid', 'profile', 'email', 'role', ]
+AUTHENTICATION_BACKENDS = {'monitoring.auth0backend.Auth0', 'django.contrib.auth.backends.ModelBackend', }
