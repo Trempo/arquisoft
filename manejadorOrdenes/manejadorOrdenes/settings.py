@@ -136,4 +136,4 @@ SOCIAL_AUTH_AUTH0_DOMAIN = 'isis2503-trempo.us.auth0.com'
 SOCIAL_AUTH_AUTH0_KEY = 'zEMtfeR1d6vuJMM97TskzlWEtr8YTbWo'
 SOCIAL_AUTH_AUTH0_SECRET = 'DCynGHILAavIlVgdOQmsW2-c54BrmOaJ9vK2qXIqUQ2cMXTVVOgJWfBYmrC7-gZP'
 SOCIAL_AUTH_AUTH0_SCOPE = ['openid', 'profile', 'email', 'role', ]
-AUTHENTICATION_BACKENDS = {'monitoring.auth0backend.Auth0', 'django.contrib.auth.backends.ModelBackend', }
+AUTHENTICATION_BACKENDS = {'stigmergy.auth0backend.Auth0', 'django.contrib.auth.backends.ModelBackend', }
