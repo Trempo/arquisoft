@@ -1,10 +1,12 @@
 from django.contrib import admin
 from django.urls import path, include
+from django.views.decorators.csrf import csrf_exempt
+
 from . import views
 
 urlpatterns = [
-    path('', views.list_order_view, name='list_order_view'),
-    path('<int:order_pk>/', views.order_view, name='order_view'),
+    path('', csrf_exempt(views.list_order_view), name='list_order_view'),
+    path('<int:order_pk>/', csrf_exempt(views.order_view), name='order_view'),
     path('<int:order_pk>/orderitems/', include('orderitems.urls'))
 
 ]

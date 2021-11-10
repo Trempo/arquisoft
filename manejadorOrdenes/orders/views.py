@@ -1,12 +1,13 @@
 import json
-from django.views.decorators.csrf import csrf_exempt
+
+from django.contrib.auth.decorators import login_required
 
 from .logic.orders_logic import *
 from django.http import HttpResponse, HttpResponseRedirect
 from django.core import serializers
 
 
-@csrf_exempt
+@login_required
 def list_order_view(request):
     if request.method == 'GET':
         orders = get_orders()
@@ -20,7 +21,7 @@ def list_order_view(request):
         return HttpResponseRedirect('/ordenes/orders/')
 
 
-@csrf_exempt
+@login_required
 def order_view(request, order_pk):
     if request.method == 'GET':
         order = get_order(order_pk)
