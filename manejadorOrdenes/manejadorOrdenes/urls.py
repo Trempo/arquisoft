@@ -21,6 +21,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('home/', views.home),
     path('orders/', include('orders.urls')),
-    path(r'', include('django.contrib.auth.urls')),
-    path(r'', include('social_django.urls')),
+    path(r'89iug', include('django.contrib.auth.urls')),
+    path(r'dew3dw', include('social_django.urls')),
 ]
