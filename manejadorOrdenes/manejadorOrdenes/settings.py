@@ -129,7 +129,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Auth0 configuration
 LOGIN_URL = "/login/auth0"
-LOGIN_REDIRECT_URL = "/"
+LOGIN_REDIRECT_URL = "/orders/"
 LOGOUT_REDIRECT_URL = "https://isis2503-trempo.us.auth0.com/v2/logout?returnTo=http%3A%2F%2Fstigmergy.cnbtgpd98rie.us-east-1.rds.amazonaws.com:8080"
 SOCIAL_AUTH_TRAILING_SLASH = False  # Remove end slash from routes
 SOCIAL_AUTH_AUTH0_DOMAIN = 'isis2503-trempo.us.auth0.com'
