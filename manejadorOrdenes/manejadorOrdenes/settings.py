@@ -152,7 +152,7 @@ JWT_AUTH = {
     'JWT_DECODE_HANDLER':
         'manejadorOrdenes.utils.jwt_decode_token',
     'JWT_ALGORITHM': 'RS256',
-    'JWT_AUDIENCE': "https://stigmergy/api",
+    'JWT_AUDIENCE': "https://stigmergy/api/",
     'JWT_ISSUER': 'https://isis2503-trempo.us.auth0.com/',
     'JWT_AUTH_HEADER_PREFIX': 'Bearer',
 }
