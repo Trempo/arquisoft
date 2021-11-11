@@ -6,7 +6,7 @@ from django.core import serializers
 from manejadorOrdenes.auth0backend import Auth0
 
 
-@login_required
+
 def list_order_view(request):
     if request.method == 'GET':
         Auth0().getRole(request)
