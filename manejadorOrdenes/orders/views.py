@@ -7,7 +7,8 @@ from django.http import JsonResponse
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny
 
-@api_view(['GET'])
+
+@api_view(['GET', 'POST'])
 @api_view(['POST'])
 def list_order_view(request):
     if request.method == 'GET':
@@ -36,6 +37,3 @@ def order_view(request, order_pk):
         order = body['order']
         update_order(order_pk, order)
         return HttpResponseRedirect('/ordenes/orders/' + str(order_pk) + '/')
-
-
-
