@@ -40,4 +40,5 @@ class Auth0(BaseOAuth2):
         resp = requests.get(url, headers=headers)
         userinfo = resp.json()
         role = userinfo['https://isis2503-trempo.us.auth0.com/role']
-        return (role)
+        return role
+
