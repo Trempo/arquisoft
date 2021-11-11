@@ -31,7 +31,7 @@ class Auth0(BaseOAuth2):
                 'picture': userinfo['picture'],
                 'user_id': userinfo['sub']}
 
-    def getRole(request):
+    def getRole(self, request):
         user = request.user
         auth0user = user.social_auth.get(provider="auth0")
         accessToken = auth0user.extra_data['access_token']
