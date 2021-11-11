@@ -10,7 +10,7 @@ from manejadorOrdenes.auth0backend import *
 def list_order_view(request):
     if request.method == 'GET':
         auth = Auth0()
-        auth.access_token_url()
+        return auth.getRole(request)
         orders = get_orders()
         order_dto = serializers.serialize('json', orders)
         return HttpResponse(order_dto, 'application/json')
