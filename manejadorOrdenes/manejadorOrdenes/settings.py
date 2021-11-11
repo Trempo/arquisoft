@@ -146,11 +146,13 @@ REST_FRAMEWORK = {
     ),
 }
 
+# apiexample/settings.py
+
 JWT_AUTH = {
     'JWT_PAYLOAD_GET_USERNAME_HANDLER':
-        'manejadorOrdenes.utils.jwt_get_username_from_payload_handler',
+        'auth0authorization.utils.jwt_get_username_from_payload_handler',
     'JWT_DECODE_HANDLER':
-        'manejadorOrdenes.utils.jwt_decode_token',
+        'auth0authorization.utils.jwt_decode_token',
     'JWT_ALGORITHM': 'RS256',
     'JWT_AUDIENCE': 'https://stigmergy/api',
     'JWT_ISSUER': 'https://isis2503-trempo.us.auth0.com/',
