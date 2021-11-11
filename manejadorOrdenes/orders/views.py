@@ -9,7 +9,7 @@ from manejadorOrdenes.auth0backend import *
 @login_required
 def list_order_view(request):
     if request.method == 'GET':
-        return request.session['access_token']
+        Auth0.access_token_url()
         orders = get_orders()
         order_dto = serializers.serialize('json', orders)
         return HttpResponse(order_dto, 'application/json')
