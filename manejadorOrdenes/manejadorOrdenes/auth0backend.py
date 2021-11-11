@@ -35,7 +35,7 @@ class Auth0(BaseOAuth2):
         user = request.user
         auth0user = user.social_auth.get(provider="auth0")
         accessToken = auth0user.extra_data['access_token']
-        print(request.__str__())
+        print(request.user.metadata)
         url = "https://isis2503-trempo.us.auth0.com/userinfo"
         headers = {'authorization': 'Bearer ' + accessToken}
         resp = requests.get(url, headers=headers)
