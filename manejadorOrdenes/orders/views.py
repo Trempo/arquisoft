@@ -24,6 +24,7 @@ def list_order_view(request: django.http.HttpRequest):
         return HttpResponseRedirect('/ordenes/orders/')
 
 
+@api_view(['GET', 'DELETE', 'PUT'])
 def order_view(request: django.http.HttpRequest, order_pk):
     if request.method == 'GET':
         order = get_order(order_pk)
