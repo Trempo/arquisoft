@@ -35,10 +35,11 @@ class Auth0(BaseOAuth2):
         user = request.user
         auth0user = user.social_auth.get(provider="auth0")
         accessToken = auth0user.extra_data['access_token']
+        print(accessToken)
         url = "https://isis2503-trempo.us.auth0.com/userinfo"
         headers = {'authorization': 'Bearer ' + accessToken}
         resp = requests.get(url, headers=headers)
         userinfo = resp.json()
-        print(userinfo)
-        return "jpa"
+        role = userinfo['https://isis2503-trempo:us:auth0:com/role']
+        return role
 
