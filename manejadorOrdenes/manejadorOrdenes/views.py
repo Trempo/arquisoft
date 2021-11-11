@@ -3,8 +3,10 @@ from functools import wraps
 import jwt
 
 from django.http import JsonResponse
+from rest_framework.decorators import api_view
 
 
+@api_view(['GET'])
 def home(request):
     return HttpResponse("Hello World")
 
