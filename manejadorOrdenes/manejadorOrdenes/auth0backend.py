@@ -39,6 +39,6 @@ class Auth0(BaseOAuth2):
         headers = {'authorization': 'Bearer ' + accessToken}
         resp = requests.get(url, headers=headers)
         userinfo = resp.json()
-        role = userinfo['https://isis2503-trempo.us.auth0.com/role']
-        return role
+        print(userinfo)
+        return "jpa"
 
