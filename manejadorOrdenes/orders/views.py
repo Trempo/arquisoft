@@ -1,15 +1,15 @@
 import json
-
 from django.contrib.auth.decorators import login_required
-
 from .logic.orders_logic import *
 from django.http import HttpResponse, HttpResponseRedirect
 from django.core import serializers
+from manejadorOrdenes.auth0backend import *
 
 
 @login_required
 def list_order_view(request):
     if request.method == 'GET':
+        return request.session['access_token']
         orders = get_orders()
         order_dto = serializers.serialize('json', orders)
         return HttpResponse(order_dto, 'application/json')
