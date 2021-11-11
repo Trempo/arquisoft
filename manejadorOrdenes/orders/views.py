@@ -3,13 +3,14 @@ from django.contrib.auth.decorators import login_required
 from .logic.orders_logic import *
 from django.http import HttpResponse, HttpResponseRedirect
 from django.core import serializers
-from manejadorOrdenes.auth0backend import Auth0
+from django.http import JsonResponse
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import AllowAny
 
-
-@login_required
+@api_view(['GET'])
+@api_view(['POST'])
 def list_order_view(request):
     if request.method == 'GET':
-        Auth0().getRole(request)
         orders = get_orders()
         order_dto = serializers.serialize('json', orders)
         return HttpResponse(order_dto, 'application/json')
@@ -21,7 +22,6 @@ def list_order_view(request):
         return HttpResponseRedirect('/ordenes/orders/')
 
 
-@login_required
 def order_view(request, order_pk):
     if request.method == 'GET':
         order = get_order(order_pk)

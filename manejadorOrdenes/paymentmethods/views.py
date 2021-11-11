@@ -9,7 +9,6 @@ from django.http import HttpResponse
 from django.core import serializers
 
 
-@login_required
 def get_paymentmethods_list(request, order_pk):
     if request.method == 'GET':
         paymentmethods = get_paymentmethods(order_pk)
@@ -23,7 +22,6 @@ def get_paymentmethods_list(request, order_pk):
         return HttpResponseRedirect('/orders/' + str(order_pk) + '/paymentmethods/')
 
 
-@login_required
 def paymentmethod_view(request, paymentmethod_pk, order_pk):
     if request.method == 'GET':
         paymentmethod = get_paymentmethod(paymentmethod_pk)

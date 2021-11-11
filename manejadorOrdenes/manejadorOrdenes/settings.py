@@ -39,7 +39,8 @@ INSTALLED_APPS = [
     'orderitems',
     'orderstatus',
     'paymentmethods',
-    'social_django'
+    'rest_framework'
+
 ]
 
 MIDDLEWARE = [
@@ -50,6 +51,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.contrib.auth.middleware.RemoteUserMiddleware',
 ]
 
 ROOT_URLCONF = 'manejadorOrdenes.urls'
@@ -128,12 +130,29 @@ STATIC_URL = '/static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Auth0 configuration
-LOGIN_URL = "/login/auth0"
-LOGIN_REDIRECT_URL = "/"
-LOGOUT_REDIRECT_URL = "https://isis2503-trempo.us.auth0.com/v2/logout?returnTo=http%3A%2F%2Fec2-54-90-166-155.compute-1.amazonaws.com:8080/"
-SOCIAL_AUTH_TRAILING_SLASH = False  # Remove end slash from routes
-SOCIAL_AUTH_AUTH0_DOMAIN = 'isis2503-trempo.us.auth0.com'
-SOCIAL_AUTH_AUTH0_KEY = 'zEMtfeR1d6vuJMM97TskzlWEtr8YTbWo'
-SOCIAL_AUTH_AUTH0_SECRET = 'DCynGHILAavIlVgdOQmsW2-c54BrmOaJ9vK2qXIqUQ2cMXTVVOgJWfBYmrC7-gZP'
-SOCIAL_AUTH_AUTH0_SCOPE = ['openid', 'profile', 'email', 'role', ]
-AUTHENTICATION_BACKENDS = {'manejadorOrdenes.auth0backend.Auth0', 'django.contrib.auth.backends.ModelBackend', }
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'django.contrib.auth.backends.RemoteUserBackend',
+]
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
+    ),
+}
+
+JWT_AUTH = {
+    'JWT_PAYLOAD_GET_USERNAME_HANDLER':
+        'auth0authorization.utils.jwt_get_username_from_payload_handler',
+    'JWT_DECODE_HANDLER':
+        'auth0authorization.utils.jwt_decode_token',
+    'JWT_ALGORITHM': 'RS256',
+    'JWT_AUDIENCE': 'https://stigmergy/api',
+    'JWT_ISSUER': 'https://isis2503-trempo.us.auth0.com/',
+    'JWT_AUTH_HEADER_PREFIX': 'Bearer',
+}
