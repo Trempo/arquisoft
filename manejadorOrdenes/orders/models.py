@@ -9,5 +9,5 @@ class Order(models.Model):
     review = models.IntegerField(default=5)
 
     def __str__(self):
-        return 'Fecha: ' + str(self.date) + '\nPrecio: ' + str(self.cost) + '\nEspecificaciones: ' + self.specifications \
-               + '\nRecogedor autorizado: ' + self.authorizedPerson + '\nCalificacion: ' + str(self.review)
+        return 'Fecha: ' + str(self.date) + '\nPrecio: ' + str(self.cost) + '\nEspecificaciones: ' + str(self.specifications) \
+               + '\nRecogedor autorizado: ' + str(self.authorizedPerson) + '\nCalificacion: ' + str(self.review)
