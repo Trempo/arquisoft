@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/3.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
-
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -73,6 +73,13 @@ TEMPLATES = [
 WSGI_APPLICATION = 'manejadorComercio.wsgi.application'
 
 
+# Busca automaticamente una environment variable de la base de datos
+
+DEFAULT_DB_HOST = 'stigmergy2.cdtxxefugdnk.us-east-1.rds.amazonaws.com'
+DB_HOST_ENVAR = os.environ.get('db-host', DEFAULT_DB_HOST)
+if DB_HOST_ENVAR != DEFAULT_DB_HOST:
+    print("A custom database host was detected as an environment variable: ", DB_HOST_ENVAR)
+
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
@@ -82,11 +89,10 @@ DATABASES = {
         "NAME": "stigmergy",
         "USER": "stigmergy",
         "PASSWORD": "stigmergy",
-        "HOST": "172.24.98.84",
+        "HOST": "stigmergy2.cdtxxefugdnk.us-east-1.rds.amazonaws.com",
         "PORT": "5432",
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators

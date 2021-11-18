@@ -9,11 +9,12 @@ https://docs.djangoproject.com/en/3.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
-
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
@@ -25,6 +26,7 @@ SECRET_KEY = 'django-insecure-w+vj23@hv1dprv*bo=iodi4^=e(kmvbgiv_$as$k$ydlo6723(
 DEBUG = True
 
 ALLOWED_HOSTS = ['*']
+
 
 # Application definition
 
@@ -39,9 +41,6 @@ INSTALLED_APPS = [
     'orderitems',
     'orderstatus',
     'paymentmethods',
-    'rest_framework',
-    'rest_framework_simplejwt',
-
 ]
 
 MIDDLEWARE = [
@@ -74,6 +73,13 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'manejadorOrdenes.wsgi.application'
 
+# Busca automaticamente una environment variable de la base de datos
+
+DEFAULT_DB_HOST = 'stigmergy2.cdtxxefugdnk.us-east-1.rds.amazonaws.com'
+DB_HOST_ENVAR = os.environ.get('db-host', DEFAULT_DB_HOST)
+if DB_HOST_ENVAR != DEFAULT_DB_HOST:
+    print("A custom database host was detected as an environment variable: ", DB_HOST_ENVAR)
+
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
@@ -83,10 +89,11 @@ DATABASES = {
         "NAME": "stigmergy",
         "USER": "stigmergy",
         "PASSWORD": "stigmergy",
-        "HOST": "stigmergy.cnbtgpd98rie.us-east-1.rds.amazonaws.com",
+        "HOST": "stigmergy2.cdtxxefugdnk.us-east-1.rds.amazonaws.com",
         "PORT": "5432",
     }
 }
+
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
@@ -106,6 +113,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
@@ -119,6 +127,7 @@ USE_L10N = True
 
 USE_TZ = True
 
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
@@ -128,23 +137,3 @@ STATIC_URL = '/static/'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-
-
-# apiexample/settings.py
-
-
-REST_FRAMEWORK = {
-
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
-        'rest_framework.authentication.TokenAuthentication',
-        'rest_framework.authentication.SessionAuthentication',
-
-    ),
-    'DEFAULT_PERMISSION_CLASSES': (
-        'rest_framework.permissions.IsAdminUser'
-    ),
-
-}
