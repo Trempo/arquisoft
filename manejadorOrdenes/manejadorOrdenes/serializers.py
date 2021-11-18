@@ -18,6 +18,13 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
         """
         return make_password(value)
 
+    def create(self, validated_data):
+        user = super().create(validated_data)
+        user.set_password(validated_data['password'])
+        user.save()
+        return user
+
+
 class GroupSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Group

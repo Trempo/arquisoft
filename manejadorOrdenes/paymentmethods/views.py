@@ -1,41 +1,68 @@
 import json
 
+import django
 from django.contrib.auth.decorators import login_required
 from django.http.response import HttpResponseRedirect
 from django.shortcuts import render
+from rest_framework import permissions
+from rest_framework.response import Response
+from rest_framework.views import APIView
 
 from .logic.paymentmethods_logic import *
 from django.http import HttpResponse
 from django.core import serializers
+from rest_framework_simplejwt.authentication import JWTAuthentication
+
+from .serializers import PaymentMethodSerializer
 
 
-def get_paymentmethods_list(request, order_pk):
-    if request.method == 'GET':
-        paymentmethods = get_paymentmethods(order_pk)
+class paymentmethods_view(APIView):
+    serializer_class = PaymentMethodSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get(self, request: django.http.HttpRequest):
+        user = (JWTAuthentication().authenticate(request))[0]
+        paymentmethods = get_paymentmethods(user)
         paymentmethods_dto = serializers.serialize('json', paymentmethods)
-        return HttpResponse(paymentmethods_dto, 'application/json')
-    elif request.method == 'POST':
+        return Response(json.loads(paymentmethods_dto))
+
+    def post(self, request: django.http.HttpRequest):
+        user = (JWTAuthentication().authenticate(request))[0]
         body_unicode = request.body.decode('utf-8')
         body = json.loads(body_unicode)
         paymentmethod = body['paymentmethod']
-        create_paymentmethod(paymentmethod)
-        return HttpResponseRedirect('/orders/' + str(order_pk) + '/paymentmethods/')
+        create_paymentmethod(paymentmethod, user)
+        return HttpResponseRedirect('/ordenes/paymentmethods/')
 
 
-def paymentmethod_view(request, paymentmethod_pk, order_pk):
-    if request.method == 'GET':
-        paymentmethod = get_paymentmethod(paymentmethod_pk)
-        paymentmethod_dto = serializers.serialize('json', paymentmethod)
-        return HttpResponse(paymentmethod_dto, 'application/json')
-    elif request.method == 'DELETE':
-        delete_paymentmethod(paymentmethod_pk)
-        return HttpResponseRedirect('/orders/' + str(order_pk) + '/paymentmethods/')
-    elif request.method == 'PUT':
-        body_unicode = request.body.decode('utf-8')
-        body = json.loads(body_unicode)
-        paymentmethod = body['paymentmethod']
-        update_paymentmethod(paymentmethod_pk, paymentmethod)
-        return HttpResponseRedirect('/orders/' + str(order_pk) + '/paymentmethods/' + str(paymentmethod_pk) + '/')
+class paymentmethodsdetail_view(APIView):
+    serializer_class = PaymentMethodSerializer
+    permission_classes = [permissions.IsAuthenticated]
 
+    def get(self, request, paymentmethod_pk):
+        user = (JWTAuthentication().authenticate(request))[0]
+        if verify_paymentmethod(paymentmethod_pk, user):
+            paymentmethod = get_paymentmethod(paymentmethod_pk)
+            paymentmethod_dto = serializers.serialize('json', paymentmethod)
+            return Response(json.loads(paymentmethod_dto))
+        else:
+            return HttpResponse(status=401)
 
+    def post(self, request, paymentmethod_pk):
+        user = (JWTAuthentication().authenticate(request))[0]
+        if verify_paymentmethod(paymentmethod_pk, user):
+            delete_paymentmethod(paymentmethod_pk)
+            return HttpResponseRedirect('/ordenes/paymentmethods/')
+        else:
+            return HttpResponse(status=401)
 
+    def put(self, request, paymentmethod_pk):
+        user = (JWTAuthentication().authenticate(request))[0]
+        if (verify_paymentmethod(paymentmethod_pk, user)):
+            body_unicode = request.body.decode('utf-8')
+            body = json.loads(body_unicode)
+            paymentmethod = body['paymentmethod']
+            update_paymentmethod(paymentmethod_pk, paymentmethod)
+            return HttpResponseRedirect('/ordenes/paymentmethods/' + str(paymentmethod_pk) + '/')
+        else:
+            return HttpResponse(status=401)

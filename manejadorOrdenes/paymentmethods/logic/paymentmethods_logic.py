@@ -1,9 +1,11 @@
+from django.contrib.auth.models import User, Group
+
 from orders.models import Order
 from ..models import PaymentMethod
 
 
-def get_paymentmethods(order_pk):
-    paymentmethods = PaymentMethod.objects.filter(order=order_pk)
+def get_paymentmethods(user):
+    paymentmethods = PaymentMethod.objects.filter(username=user)
     return paymentmethods
 
 
@@ -29,8 +31,18 @@ def delete_paymentmethod(paymentmethod_pk):
     paymentmethod.delete()
 
 
-def create_paymentmethod(new_paymentmethod):
+def verify_paymentmethod(paymentmethod_pk, user):
+    saveduser = User.objects.get(username=user)
+    if saveduser.groups.all().filter(name='vendedor').exists():
+        return False
+    paymentmethod = PaymentMethod.objects.get(pk=paymentmethod_pk)
+    if str(paymentmethod.username) == str(user):
+        return True
+    else:
+        return False
+
+def create_paymentmethod(new_paymentmethod, user):
     order = Order.objects.get(pk = new_paymentmethod['order'])
-    paymentmethod = PaymentMethod(name=new_paymentmethod['name'], accountnumber=new_paymentmethod['accountnumber'],date=new_paymentmethod['date'],cvc=new_paymentmethod['cvc'],order=order)
+    paymentmethod = PaymentMethod(name=new_paymentmethod['name'], accountnumber=new_paymentmethod['accountnumber'],date=new_paymentmethod['date'],cvc=new_paymentmethod['cvc'],order=order, username=user)
     paymentmethod.save()
     return paymentmethod
