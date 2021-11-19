@@ -34,5 +34,5 @@ urlpatterns = [
     re_path('/?token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
 
     re_path('/?api-auth/', include('rest_framework.urls', namespace='rest_framework')),
-    re_path('/?', include(router.urls)),
+    re_path('', include(router.urls)),
 ]
