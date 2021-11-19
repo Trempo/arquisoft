@@ -162,5 +162,5 @@ USE_TZ = True
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-#USE_X_FORWARDED_HOST = True
-#FORCE_SCRIPT_NAME = '/ordenes'
+USE_X_FORWARDED_HOST = True
+FORCE_SCRIPT_NAME = '/ordenes'
