@@ -5,7 +5,7 @@ def execute():
     threading.Timer(5.0, execute).start()
     bashCmd = '''
                 cd ..
-                cd /Users/andres/Documents/Uniandes/infracomp/infracomp-caso1
+                cd /home/ec2-user/arquisoft
                 git remote update
                 var="$(git status -uno)"
                 if [[ $var =~ "branch is behind" ]]; then
