@@ -14,7 +14,8 @@ sudo journalctl -f -u manejador-ordenes.service
 
 [Unit]
 Description=manejador de ordenes
-
+Requires=network-online.target
+After=network-online.target
 [Service]
 ExecStart=/home/ec2-user/runserverordenes.sh
 User=ec2-user

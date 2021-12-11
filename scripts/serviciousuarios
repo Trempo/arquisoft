@@ -13,6 +13,9 @@ sudo journalctl -f -u manejador-usuarios.service
 
 [Unit]
 Description=manejador de usuarios
+Requires=network-online.target
+Requires=docker.service
+After=docker.service
 
 [Service]
 ExecStart=/home/ec2-user/runserverusuarios.sh

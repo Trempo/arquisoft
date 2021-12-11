@@ -12,7 +12,8 @@ sudo journalctl -f -u manejador-comercios.service
 
 [Unit]
 Description=manejador de comercios
-
+Requires=network-online.target
+After=network-online.target
 [Service]
 ExecStart=/home/ec2-user/runservercomercio.sh
 User=ec2-user
