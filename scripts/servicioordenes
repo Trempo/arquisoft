@@ -1,0 +1,25 @@
+manejador-ordenes.service
+
+sudo nano /etc/systemd/system/manejador-ordenes.service
+
+sudo systemctl enable manejador-ordenes.service
+sudo systemctl start manejador-ordenes.service
+sudo systemctl status manejador-ordenes.service
+
+sudo systemctl restart manejador-ordenes.service
+
+sudo systemctl daemon-reload
+
+sudo journalctl -f -u manejador-ordenes.service
+
+[Unit]
+Description=manejador de ordenes
+
+[Service]
+ExecStart=/home/ec2-user/runserverordenes.sh
+User=ec2-user
+Group=ec2-user
+
+[Install]
+WantedBy=multi-user.target
+

@@ -1,0 +1,23 @@
+manejador-comercios.service
+
+sudo nano /etc/systemd/system/manejador-comercios.service
+
+sudo systemctl enable manejador-comercios.service
+sudo systemctl start manejador-comercios.service
+sudo systemctl status manejador-comercios.service
+
+sudo systemctl daemon-reload
+
+sudo journalctl -f -u manejador-comercios.service
+
+[Unit]
+Description=manejador de comercios
+
+[Service]
+ExecStart=/home/ec2-user/runservercomercio.sh
+User=ec2-user
+Group=ec2-user
+
+[Install]
+WantedBy=multi-user.target
+
