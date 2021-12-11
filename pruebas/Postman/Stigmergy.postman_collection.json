@@ -1,0 +1,415 @@
+{
+	"info": {
+		"_postman_id": "7279158e-d8bd-4571-9dde-c60fd3ef760a",
+		"name": "Stigmergy",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Kong",
+			"item": [
+				{
+					"name": "Find Services",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{gateway}}:8001/services",
+							"host": [
+								"{{gateway}}"
+							],
+							"port": "8001",
+							"path": [
+								"services"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Enable CORS plugin",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "cors",
+									"type": "text"
+								}
+							],
+							"options": {
+								"raw": {
+									"language": "text"
+								}
+							}
+						},
+						"url": {
+							"raw": "ec2-3-219-151-84.compute-1.amazonaws.com:8001/plugins/",
+							"host": [
+								"ec2-3-219-151-84",
+								"compute-1",
+								"amazonaws",
+								"com"
+							],
+							"port": "8001",
+							"path": [
+								"plugins",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Modify plugin CORS",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "ec2-3-219-151-84.compute-1.amazonaws.com:8001/plugins/938c21b3-645a-4d02-aa52-5465aaf789a2",
+							"host": [
+								"ec2-3-219-151-84",
+								"compute-1",
+								"amazonaws",
+								"com"
+							],
+							"port": "8001",
+							"path": [
+								"plugins",
+								"938c21b3-645a-4d02-aa52-5465aaf789a2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "usuarios",
+			"item": [
+				{
+					"name": "Create user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Tokens are different\", function () {\r",
+									"    pm.expect(responseBody).not.equal(pm.environment.get(\"jwt\"));\r",
+									"});\r",
+									"pm.environment.set(\"jwt\", responseBody);\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.environment.set(\"uinc\", Number(pm.environment.get(\"uinc\")) + 1);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"u{{uinc}}\",\r\n    \"password\": \"u{{uinc}}\",\r\n    \"first_name\": \"larry\",\r\n    \"last_name\": \"david\",\r\n    \"email\": \"u{{uinc}}@u{{uinc}}.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{gateway}}/users/users",
+							"host": [
+								"{{gateway}}"
+							],
+							"path": [
+								"users",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Reach server directly",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://ec2-3-86-28-218.compute-1.amazonaws.com:3000/",
+							"protocol": "http",
+							"host": [
+								"ec2-3-86-28-218",
+								"compute-1",
+								"amazonaws",
+								"com"
+							],
+							"port": "3000",
+							"path": [
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Correct user was retrieved\", ()=>{\r",
+									"\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.id).to.eql(pm.environment.get(\"uinc\"));\r",
+									"    \r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{gateway}}/users/users/{{uinc}}",
+							"host": [
+								"{{gateway}}"
+							],
+							"path": [
+								"users",
+								"users",
+								"{{uinc}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Body matches string\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(pm.environment.get(\"uinc\") + \" deleted successfully\");\r",
+									"\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{gateway}}/users/users/{{uinc}}",
+							"host": [
+								"{{gateway}}"
+							],
+							"path": [
+								"users",
+								"users",
+								"{{uinc}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "comercios",
+			"item": [
+				{
+					"name": "Listar comercios",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{gateway}}/comercios/comercios/",
+							"host": [
+								"{{gateway}}"
+							],
+							"path": [
+								"comercios",
+								"comercios",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "verify",
+			"item": [
+				{
+					"name": "Verify token is valid",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Body matches string\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"The token is valid for the user with id 69\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwidXNlcl9pZCI6NjksImlhdCI6MTYzOTIxOTY1NCwiZXhwIjoxNjM5MzkyNDU0LCJqdGkiOiI0ZTFhODQ1NWJkNzkyNzFkN2M5ZTcxODkzNDEzNGIwZSJ9.197YnyQnJdmWevvU_yCa693ZENlc8QrSgG45SmtPt4A",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{gateway}}/users/verify/token/69",
+							"host": [
+								"{{gateway}}"
+							],
+							"path": [
+								"users",
+								"verify",
+								"token",
+								"69"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login attempt success",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\":\"testman\",\r\n    \"password\": \"testman\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{gateway}}/users/verify/login/",
+							"host": [
+								"{{gateway}}"
+							],
+							"path": [
+								"users",
+								"verify",
+								"login",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "ordenes",
+			"item": [
+				{
+					"name": "Listar ordenes",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwidXNlcl9pZCI6NjksImlhdCI6MTYzOTIyNDQ3MSwiZXhwIjoxNjM5Mzk3MjcxLCJqdGkiOiI5MjliYjI2MzE4Y2YwZGZkOTZkNjgwMTM2NDRjZDQ1ZCJ9.PkVjSLOj9iwfFDTOEecykASSVyxzxe9PTp4emyNo3-Y",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{gateway}}/orders/orders",
+							"host": [
+								"{{gateway}}"
+							],
+							"path": [
+								"orders",
+								"orders"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

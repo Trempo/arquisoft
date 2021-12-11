@@ -1,0 +1,27 @@
+manejador-usuarios.service
+
+sudo nano /etc/systemd/system/manejador-usuarios.service
+
+sudo systemctl enable manejador-usuarios.service
+sudo systemctl restart manejador-usuarios.service
+sudo systemctl start manejador-usuarios.service
+sudo systemctl status manejador-usuarios.service
+
+sudo systemctl daemon-reload
+
+sudo journalctl -f -u manejador-usuarios.service
+
+[Unit]
+Description=manejador de usuarios
+Requires=network-online.target
+Requires=docker.service
+After=docker.service
+
+[Service]
+ExecStart=/home/ec2-user/runserverusuarios.sh
+User=ec2-user
+Group=ec2-user
+
+[Install]
+WantedBy=multi-user.target
+
