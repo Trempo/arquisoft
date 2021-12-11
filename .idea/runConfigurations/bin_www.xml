@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="bin\www" type="NodeJSConfigurationType" path-to-js-file="bin/www" working-dir="$PROJECT_DIR$/manejador-usuarios">
+  <configuration default="false" name="bin\www" type="NodeJSConfigurationType" path-to-js-file="$PROJECT_DIR$/manejador-usuarios/bin/www.js" working-dir="$PROJECT_DIR$/manejador-usuarios">
     <envs>
       <env name="DEBUG" value="manejador-usuarios:*" />
     </envs>

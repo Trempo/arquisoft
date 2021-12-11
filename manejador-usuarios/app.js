@@ -9,7 +9,7 @@ var usersRouter = require('./routes/users');
 
 var app = express();
 var pgp = require('pg-promise')(/* options */)
-export var db = pgp('postgres://stigmergy:stigmergy@stigmergy2.cdtxxefugdnk.us-east-1.rds.amazonaws.com:5432/stigmergy')
+var db = pgp('postgres://stigmergy:stigmergy@stigmergy2.cdtxxefugdnk.us-east-1.rds.amazonaws.com:5432/stigmergy')
 
 
 // view engine setup
@@ -23,7 +23,7 @@ app.use(cookieParser());
 
 app.use(express.static(path.join(__dirname, 'public')));
 
-//app.use('/', usersRouter);
+app.use('/', indexRouter);
 app.use('/users', usersRouter);
 
 // catch 404 and forward to error handler
@@ -42,4 +42,7 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-module.exports = app;
+module.exports = {
+  app,
+  db
+};

@@ -1,9 +1,9 @@
-import {getJwtid, hash_password, JWT_SECRET} from "../model/models";
+const {getJwtid, hash_password, JWT_SECRET} = require('../model/models')
 
 var express = require('express');
 var router = express.Router();
-import db from 'app'
-import jwt from 'jsonwebtoken'
+const db = require('../app').db
+const jwt = require('jsonwebtoken')
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
