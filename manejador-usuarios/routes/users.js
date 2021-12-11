@@ -6,4 +6,9 @@ router.get('/', function(req, res, next) {
   res.send('respond with a resource');
 });
 
+router.post('/', (req, res) => {
+  username = req.body.username
+  password = req.body.password
+})
+
 module.exports = router;

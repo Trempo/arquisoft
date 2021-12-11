@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
+    <data-source source="LOCAL" name="stigmergy@stigmergy2.cdtxxefugdnk.us-east-1.rds.amazonaws.com" uuid="962ea143-0121-4e51-9952-11c71af698d3">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://stigmergy2.cdtxxefugdnk.us-east-1.rds.amazonaws.com:5432/stigmergy</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
+  </component>
+</project>
