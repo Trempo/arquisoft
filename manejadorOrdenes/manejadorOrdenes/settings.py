@@ -131,7 +131,6 @@ AUTH_PASSWORD_VALIDATORS = [
 FORCE_SCRIPT_NAME = '/orders'
 
 STATIC_URL = '/orders/static/'
-WHITENOISE_STATIC_PREFIX = '/static'
 
 
 # Default primary key field type
