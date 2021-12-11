@@ -11,6 +11,7 @@ const hash_password = (password)=>{
 
     final_output = final_output + `${salt}\$${derivedKey}`
 
+    crypto.DEFAULT_ENCODING = 'buffer'
     return final_output
 }
 
