@@ -6,9 +6,34 @@ var pgp = require('pg-promise')(/* options */)
 var db = pgp('postgres://stigmergy:stigmergy@stigmergy2.cdtxxefugdnk.us-east-1.rds.amazonaws.com:5432/stigmergy')
 const jwt = require('jsonwebtoken')
 
-/* GET users listing. */
-router.get('/', function (req, res, next) {
-    res.send('respond with a resource');
+/* Verify if a token is valid for a given user id. */
+router.get('/token/:id', async function (req, res, next) {
+    const requestedid = req.params.id
+    if (req.headers.authorization.split(" ")[0] !== "Bearer") {
+        res.status(412).send("Malformed bearer token")
+    }
+    let token = req.headers.authorization.split(" ")[1]
+    try {
+        let payload = jwt.verify(token, JWT_SECRET)
+        if ((payload.user_id) === Number(requestedid)) {
+            try {
+                let user = await db.one(`SELECT *
+                                         FROM auth_user
+                                         WHERE id = $1`, [requestedid])
+                if (user && user.id && user.id === requestedid){
+                    res.status(200).send("The token is valid for the user with id " + requestedid)
+                }else{
+                    res.status(200).send("The requested user with id " + requestedid + " was not found.")
+                }
+            } catch (e) {
+                res.status(403).send(`User of id ${requestedid} was not found: ` + e.toString())
+            }
+        } else {
+            res.status(403).send("Token not valid for requested user.")
+        }
+    } catch (err) {
+        res.status(403).send("Wrong or invalid token: " + err.toString())
+    }
 });
 
 // Create user
@@ -63,13 +88,13 @@ router.get('/:id', async (req, res) => {
                                          WHERE id = $1`, [requestedid])
                 res.json(user)
             } catch (e) {
-                res.status(403).send(`User of id ${requestedid} was not found: `+ e.toString())
+                res.status(403).send(`User of id ${requestedid} was not found: ` + e.toString())
             }
-        }else{
+        } else {
             res.status(403).send("Token not valid for requested user.")
         }
     } catch (err) {
-        res.status(403).send("Wrong or invalid token: "+ err.toString())
+        res.status(403).send("Wrong or invalid token: " + err.toString())
     }
 })
 
@@ -85,17 +110,18 @@ router.delete('/:id', async (req, res) => {
         if ((payload.user_id) === Number(requestedid)) {
             try {
 
-                await db.none(`DELETE FROM auth_user
-                                    WHERE id = $1`, [requestedid])
+                await db.none(`DELETE
+                               FROM auth_user
+                               WHERE id = $1`, [requestedid])
                 res.status(200).send(`User with id ${requestedid} deleted successfully!`)
             } catch (e) {
-                res.status(403).send(`User of id ${requestedid} was not found: `+ e.toString())
+                res.status(403).send(`User of id ${requestedid} was not found: ` + e.toString())
             }
-        }else{
+        } else {
             res.status(403).send("Token not valid for requested user.")
         }
     } catch (err) {
-        res.status(403).send("Wrong or invalid token: "+ err.toString())
+        res.status(403).send("Wrong or invalid token: " + err.toString())
     }
 })
 
