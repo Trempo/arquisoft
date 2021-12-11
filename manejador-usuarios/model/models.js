@@ -1,21 +1,32 @@
 const pbkdf = require('pbkdf2')
 const crypto = require('crypto');
 
-const hash_password = (password)=>{
+// Genera un hash de contraseña igual que el de django
+const hash_password = (password, pastPass = null) => {
     let final_output = "pbkdf2_sha256$150000$"
-    let salt = crypto.randomBytes(9).toString('base64');
-    salt = salt + salt
-    salt = salt.substring(0, 12)
+    let salt
+    if (pastPass) {
+        salt = getSaltFromPassHash(pastPass)
+    }else{
+        salt = crypto.randomBytes(9).toString('base64');
+        salt = salt + salt
+        salt = salt.substring(0, 12)
+    }
     crypto.DEFAULT_ENCODING = 'base64'
-    const derivedKey = pbkdf.pbkdf2Sync(password, 'salt', 150000, 32, 'sha256')
+    const derivedKey = pbkdf.pbkdf2Sync(password, salt, 150000, 32, 'sha256')
 
     final_output = final_output + `${salt}\$${derivedKey}`
 
     crypto.DEFAULT_ENCODING = 'buffer'
+    console.log(`Hash password: ${password}, ${pastPass}. Final hash: ${final_output}`)
     return final_output
 }
 
-const getJwtid = ()=>{
+const getSaltFromPassHash = (password) => {
+    return password.split("$")[2]
+}
+
+const getJwtid = () => {
     return "" + crypto.randomBytes(16).toString('hex');
 }
 
