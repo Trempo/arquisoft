@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/arquisoft.iml" filepath="$PROJECT_DIR$/.idea/arquisoft.iml" />
+      <module fileurl="file://$PROJECT_DIR$/manejador-usuarios/manejador-usuarios.iml" filepath="$PROJECT_DIR$/manejador-usuarios/manejador-usuarios.iml" />
     </modules>
   </component>
 </project>
