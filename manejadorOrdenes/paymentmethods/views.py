@@ -32,7 +32,7 @@ class paymentmethods_view(APIView):
         body = json.loads(body_unicode)
         paymentmethod = body['paymentmethod']
         create_paymentmethod(paymentmethod, user)
-        return HttpResponseRedirect('/ordenes/paymentmethods/')
+        return HttpResponseRedirect('/paymentmethods/')
 
 
 class paymentmethodsdetail_view(APIView):
@@ -52,7 +52,7 @@ class paymentmethodsdetail_view(APIView):
         user = (JWTAuthentication().authenticate(request))[0]
         if verify_paymentmethod(paymentmethod_pk, user):
             delete_paymentmethod(paymentmethod_pk)
-            return HttpResponseRedirect('/ordenes/paymentmethods/')
+            return HttpResponseRedirect('/paymentmethods/')
         else:
             return HttpResponse(status=401)
 
@@ -63,6 +63,6 @@ class paymentmethodsdetail_view(APIView):
             body = json.loads(body_unicode)
             paymentmethod = body['paymentmethod']
             update_paymentmethod(paymentmethod_pk, paymentmethod)
-            return HttpResponseRedirect('/ordenes/paymentmethods/' + str(paymentmethod_pk) + '/')
+            return HttpResponseRedirect('/paymentmethods/' + str(paymentmethod_pk) + '/')
         else:
             return HttpResponse(status=401)
