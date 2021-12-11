@@ -34,7 +34,7 @@ class order_view(APIView):
         body = json.loads(body_unicode)
         order = body['order']
         create_order(order)
-        return HttpResponseRedirect('/orders/orders/')
+        return HttpResponseRedirect('/ordenes/orders/')
 
 
 class order_detail_view(APIView):
@@ -56,4 +56,4 @@ class order_detail_view(APIView):
         body = json.loads(body_unicode)
         order = body['order']
         update_order(order_pk, order)
-        return HttpResponseRedirect('/orders/orders/' + str(order_pk) + '/')
+        return HttpResponseRedirect('/ordenes/orders/' + str(order_pk) + '/')
